@@ -1,0 +1,7 @@
+tile.byteMem.name=1 Byte Memory
+tile.8byteMem.name=8 Byte Memory
+tile.mar.name=M.A.R
+tile.blockWire.name=Wire
+tile.blockOutput.name=Output Block
+
+itemGroup.Computer=ComputerMod
