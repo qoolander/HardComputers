@@ -35,6 +35,8 @@ public class TileEntityCore extends ComputerTileEntityBase{
             getNewBlock(connectedWires.get(i).xCoord, connectedWires.get(i).yCoord, connectedWires.get(i).zCoord, searchedBlocks);
         }
 
+        if(marAddress==null) throw new Error("no Mar found");
+
         System.out.println(network);
     }
 
@@ -48,9 +50,11 @@ public class TileEntityCore extends ComputerTileEntityBase{
         updateNetwork();
     }
 
+    private Byte IAR = 0;
+    private Byte IR = 0;
     private Byte[] registers = new Byte[4];
     private Byte IOAddress;
-
+    private Byte marAddress;
 
     public void getNewBlock(int x, int y, int z, ArrayList<Vec3 > alreadySearchedBlocks){
         Vec3 location = Vec3.createVectorHelper(x, y, z);
@@ -63,6 +67,7 @@ public class TileEntityCore extends ComputerTileEntityBase{
                 TileEntity te = currentWire.connectedTileEntities.get(i);
                 if(te instanceof ComputerTileEntityBase){
                     network.put(((ComputerTileEntityBase) te).setByteAddress(new ArrayList<Byte>(network.keySet())), ((ComputerTileEntityBase) te));
+                    if(te instanceof TileEntityMar) marAddress = ((TileEntityMar) te).getAddress();
                 }else if(te instanceof TileEntityWire){
                     getNewBlock(((TileEntityWire) te).xCoord, ((TileEntityWire) te).yCoord, ((TileEntityWire) te).zCoord, alreadySearchedBlocks);
                 }
@@ -72,15 +77,20 @@ public class TileEntityCore extends ComputerTileEntityBase{
         }
     }
 
-    public void runCommand(int command){
+
+
+    public void cycle(){
         int num = command & 0xFF;
 
         switch(num>>4) {
+            case 0x15:
+                add(num&0xF);
+                break;
             case 0x7:
                 IO(num & 0xF);
                 break;
             case 0x1:
-
+                store(num & 0xF);
                 break;
             case 0x0:
                 load(num & 0xF);
@@ -88,11 +98,25 @@ public class TileEntityCore extends ComputerTileEntityBase{
         }
     }
 
-    private void load(int registerData){
+    private void add(int registerData) {
+        int ra = (registerData>>2)&0x3;
+        int rb = registerData&0x3;
+
+        registers[ra] = (byte)(registers[ra]+registers[rb]);
+    }
+
+    private void load(int registerData) {
+        int address = (registerData>>2)&0x3;
+        int data = registerData&0x3;
+
+        registers[data] = ((TileEntityMar) network.get(marAddress)).getDataAtAddress(registers[address]);
+    }
+
+    private void store(int registerData){
         int r1 = (registerData>>2)&0x3;
         int r2 = registerData&0x3;
 
-
+        ((TileEntityMar) network.get(marAddress)).setDataAtAddress(registers[r1], registers[r2]);
     }
 
     private void IO(int registerData){

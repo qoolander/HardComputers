@@ -91,4 +91,11 @@ public class TileEntityMar extends ComputerTileEntityBase implements IUpdatePlay
     }
 
 
+    public void setDataAtAddress(Byte address, Byte dataIn) {
+        data[address] = dataIn;
+    }
+
+    public byte getDataAtAddress(Byte address){
+        return data[address];
+    }
 }
