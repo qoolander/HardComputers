@@ -1,9 +1,6 @@
 package com.qoolander.Computer;
 
-import com.qoolander.Computer.TileEntities.TileEntityCore;
-import com.qoolander.Computer.TileEntities.TileEntityMar;
-import com.qoolander.Computer.TileEntities.TileEntityOutput;
-import com.qoolander.Computer.TileEntities.TileEntityWire;
+import com.qoolander.Computer.TileEntities.*;
 import com.qoolander.Computer.blocks.*;
 import com.qoolander.Computer.proxy.CommonProxy;
 import cpw.mods.fml.common.SidedProxy;
@@ -32,6 +29,7 @@ public class ComputerMain
     public static Block blockWire;
     public static Block blockOutput;
     public static Block blockCore;
+    public static Block blockRom;
 
     public static CreativeTabs tabMyMod = new CreativeTabsMyMod("Computer");
 
@@ -44,16 +42,19 @@ public class ComputerMain
         blockWire = new BlockWire().setBlockName("blockWire").setCreativeTab(tabMyMod);
         blockOutput = new BlockOutput("blockOutput");
         blockCore = new BlockCore("blockCore");
+        blockRom = new BlockRom("blockRom");
         GameRegistry.registerBlock(byteMem, byteMem.getUnlocalizedName().substring(5));
         GameRegistry.registerBlock(mar, mar.getUnlocalizedName().substring(5));
         GameRegistry.registerBlock(blockWire, blockWire.getUnlocalizedName().substring(5));
         GameRegistry.registerBlock(eightByteMem, eightByteMem.getUnlocalizedName().substring(5));
         GameRegistry.registerBlock(blockOutput, blockOutput.getUnlocalizedName().substring(5));
         GameRegistry.registerBlock(blockCore, blockCore.getUnlocalizedName().substring(5));
+        GameRegistry.registerBlock(blockRom, blockRom.getUnlocalizedName().substring(5));
         GameRegistry.registerTileEntity(TileEntityMar.class, "mar_tile_entity");
         GameRegistry.registerTileEntity(TileEntityWire.class, "computer_wire");
         GameRegistry.registerTileEntity(TileEntityOutput.class, "output_tile_entity");
         GameRegistry.registerTileEntity(TileEntityCore.class, "core_tile_entity");
+        GameRegistry.registerTileEntity(TileEntityRom.class, "rom_tile_entity");
 
         proxy.registerProxies();
     }

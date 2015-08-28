@@ -15,6 +15,7 @@ import java.util.ArrayList;
 public class TileEntityMar extends ComputerTileEntityBase implements IUpdatePlayerListBox{
 
     public TileEntityMar(){
+
     }
 
     public boolean ConnectToWire(ForgeDirection direction){
@@ -56,7 +57,14 @@ public class TileEntityMar extends ComputerTileEntityBase implements IUpdatePlay
 
     public void updateEntity(){}
 
+    public void onStart(){
+        UpdateMemoryAmount();
+        System.out.println("Bytes: " +ByteCount);
+        data = new byte[ByteCount];
+    }
+
     public void onPlace() {
+        super.onPlace();
         UpdateMemoryAmount();
         System.out.println("Bytes: " +ByteCount);
         data = new byte[ByteCount];

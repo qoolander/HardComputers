@@ -12,6 +12,8 @@ import java.util.Set;
  */
 public class ComputerTileEntityBase extends TileEntity implements IComputerComponent {
 
+    public void onStart(){}
+
     public boolean ConnectToWire(ForgeDirection direction){
         return false;
     }
@@ -31,11 +33,13 @@ public class ComputerTileEntityBase extends TileEntity implements IComputerCompo
         }
 
         if(largestByte==0){
+            address=0;
             return 0;
         }
 
         if(!((largestByte+=1) >=255)){
-            return --largestByte;
+            address = --largestByte;
+            return largestByte;
         }
 
         throw new IndexOutOfBoundsException();

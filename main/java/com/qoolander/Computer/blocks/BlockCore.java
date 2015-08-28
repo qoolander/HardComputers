@@ -15,7 +15,5 @@ public class BlockCore extends BlockComputerBase {
         super(unlocalizedName);
     }
 
-    public TileEntity createNewTileEntity(World world, int meta){
-        return new TileEntityCore();
-    }
+    public TileEntity createNewTileEntity(World world, int meta){ return new TileEntityCore(); }
 }

@@ -21,5 +21,7 @@ public class TileEntityOutput extends ComputerTileEntityBase {
     public void setData(byte data){
         outValue = (int)data;
         outValue = outValue&0xFF;
+
+        worldObj.notifyBlockChange(xCoord, yCoord, zCoord, worldObj.getBlock(xCoord,yCoord,zCoord));
     }
 }

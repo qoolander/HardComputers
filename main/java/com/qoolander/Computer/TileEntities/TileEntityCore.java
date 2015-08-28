@@ -48,6 +48,11 @@ public class TileEntityCore extends ComputerTileEntityBase{
     public void onBlockUpdate(){
         super.onBlockUpdate();
         updateNetwork();
+        if(this.worldObj.getBlockPowerInput(xCoord, yCoord, zCoord)>0){
+            startUp();
+        }else{
+            running = false;
+        }
     }
 
     private Byte IAR = 0;
@@ -55,6 +60,12 @@ public class TileEntityCore extends ComputerTileEntityBase{
     private Byte[] registers = new Byte[4];
     private Byte IOAddress;
     private Byte marAddress;
+    private Byte romAddress;
+
+    private boolean CFlag = false;
+    private boolean AFlag = false;
+    private boolean EFlag = false;
+    private boolean ZFlag = false;
 
     public void getNewBlock(int x, int y, int z, ArrayList<Vec3 > alreadySearchedBlocks){
         Vec3 location = Vec3.createVectorHelper(x, y, z);
@@ -68,6 +79,8 @@ public class TileEntityCore extends ComputerTileEntityBase{
                 if(te instanceof ComputerTileEntityBase){
                     network.put(((ComputerTileEntityBase) te).setByteAddress(new ArrayList<Byte>(network.keySet())), ((ComputerTileEntityBase) te));
                     if(te instanceof TileEntityMar) marAddress = ((TileEntityMar) te).getAddress();
+                    if(te instanceof TileEntityRom) romAddress = ((TileEntityRom) te).getAddress();
+
                 }else if(te instanceof TileEntityWire){
                     getNewBlock(((TileEntityWire) te).xCoord, ((TileEntityWire) te).yCoord, ((TileEntityWire) te).zCoord, alreadySearchedBlocks);
                 }
@@ -77,17 +90,54 @@ public class TileEntityCore extends ComputerTileEntityBase{
         }
     }
 
+    private boolean running = false;
 
+    public void startUp(){
+        for(int i = 0; i < network.size(); i++){
+            network.get((byte)i).onStart();
+        }
+        loadRomToRam();
+        running = true;
+    }
+
+    public void updateEntity(){
+
+        if(running) this.cycle();
+    }
+
+    private void loadRomToRam(){
+
+        for(int i = 0; i<((TileEntityRom) network.get(romAddress)).instructions.length; i++){
+            ((TileEntityMar) network.get(marAddress)).setDataAtAddress((byte)i, ((TileEntityRom) network.get(romAddress)).instructions[i]);
+        }
+    }
 
     public void cycle(){
-        int num = command & 0xFF;
+        IR = ((TileEntityMar) network.get(marAddress)).getDataAtAddress(IAR);
+
+        int num = (int)(IR)&0xFF;
 
         switch(num>>4) {
-            case 0x15:
+            case 0xF:
+                compare(num&0xF);
+                break;
+            case 0x8:
                 add(num&0xF);
+                break;
+            case 0x6:
+                CLF();
+                break;
+            case 0x5:
+                jumpif(num&0xF);
+                break;
+            case 0x4:
+                jump();
                 break;
             case 0x7:
                 IO(num & 0xF);
+                break;
+            case 0x2:
+                data(num & 0xF);
                 break;
             case 0x1:
                 store(num & 0xF);
@@ -96,6 +146,44 @@ public class TileEntityCore extends ComputerTileEntityBase{
                 load(num & 0xF);
                 break;
         }
+
+        IAR++;
+    }
+
+    private void CLF(){
+        CFlag = AFlag = EFlag = ZFlag = false;
+    }
+
+
+    private void compare(int registerData) {
+        int ra = (registerData>>2)&0x3;
+        int rb = registerData&0x3;
+
+        AFlag = registers[ra]>registers[rb];
+        EFlag = registers[ra]==registers[rb];
+    }
+
+    private void jumpif(int flags){
+        int C = flags>>3;
+        int A = (flags>>2)&0x1;
+        int E = (flags>>1)&0x1;
+        int Z = flags&0x7;
+
+        if (((C == 1 && CFlag) || !(C == 1)) && ((A == 1 && AFlag) || !(A == 1)) && ((E == 1 && EFlag) || !(E == 1)) && ((Z == 1 && ZFlag) || !(Z == 1)))
+            jump();
+    }
+
+    private void jump(){
+        IAR++;
+
+        IAR = ((TileEntityMar) network.get(marAddress)).getDataAtAddress(IAR);
+    }
+
+    private void data(int registerData){
+        int r = registerData&0x3;
+        IAR++;
+
+        registers[r] = ((TileEntityMar) network.get(marAddress)).getDataAtAddress(IAR);
     }
 
     private void add(int registerData) {
@@ -131,7 +219,7 @@ public class TileEntityCore extends ComputerTileEntityBase{
 
             }else{
                 //Address
-                IOAddress = registers[reg];
+                registers[reg] = IOAddress;
             }
         }else{
             //output
@@ -140,7 +228,7 @@ public class TileEntityCore extends ComputerTileEntityBase{
                 ((TileEntityOutput) network.get(IOAddress)).setData(registers[reg]);
             }else{
                 //Address
-                 registers[reg] = IOAddress;
+                IOAddress = registers[reg];
             }
         }
     }
