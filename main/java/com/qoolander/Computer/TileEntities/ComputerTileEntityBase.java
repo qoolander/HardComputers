@@ -13,6 +13,7 @@ import java.util.Set;
 public class ComputerTileEntityBase extends TileEntity implements IComputerComponent {
 
     public void onStart(){}
+    public void onShutDown(){}
 
     public boolean ConnectToWire(ForgeDirection direction){
         return false;

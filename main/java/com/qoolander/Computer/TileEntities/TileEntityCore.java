@@ -8,7 +8,6 @@ import com.qoolander.Computer.blocks.BlockWire;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Vec3;
 import net.minecraftforge.common.util.ForgeDirection;
-import scala.collection.mutable.HashTable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -51,7 +50,14 @@ public class TileEntityCore extends ComputerTileEntityBase{
         if(this.worldObj.getBlockPowerInput(xCoord, yCoord, zCoord)>0){
             startUp();
         }else{
-            running = false;
+            ShutDown(); //TODO implement ShutDown
+        }
+    }
+
+    private void ShutDown() {
+        running = false;
+        for(int i = 0; i < network.size(); i++){
+            network.get((byte)i).onShutDown();
         }
     }
 
@@ -167,10 +173,13 @@ public class TileEntityCore extends ComputerTileEntityBase{
         int C = flags>>3;
         int A = (flags>>2)&0x1;
         int E = (flags>>1)&0x1;
-        int Z = flags&0x7;
+        int Z = flags&0x1;
 
-        if (((C == 1 && CFlag) || !(C == 1)) && ((A == 1 && AFlag) || !(A == 1)) && ((E == 1 && EFlag) || !(E == 1)) && ((Z == 1 && ZFlag) || !(Z == 1)))
+        if (((C == 1 && CFlag) || !(C == 1)) && ((A == 1 && AFlag) || !(A == 1)) && ((E == 1 && EFlag) || !(E == 1)) && ((Z == 1 && ZFlag) || !(Z == 1))) {
             jump();
+        }else{
+            IAR++;
+        }
     }
 
     private void jump(){

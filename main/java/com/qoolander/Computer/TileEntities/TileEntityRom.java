@@ -38,8 +38,8 @@ public class TileEntityRom extends ComputerTileEntityBase {
         instructions[9] = 0x78;  //set IO data to r0
         instructions[10] = -127; //(1000 0001) Add: r0 = r0 + r1
         instructions[11] = -14;  //cmp r0 with r2
-        instructions[12] = 0x52; //JUMP if A greater flag is on to
-        instructions[13] = 0x15; //address 16
+        instructions[12] = 0x54; //JUMP if A greater flag is on to
+        instructions[13] = 0xF; //address 16
         instructions[14] = 0x40; //JUMP to
         instructions[15] = 8;    //9
 
