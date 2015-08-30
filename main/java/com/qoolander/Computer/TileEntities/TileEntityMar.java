@@ -18,6 +18,10 @@ public class TileEntityMar extends ComputerTileEntityBase implements IUpdatePlay
 
     }
 
+    public void onShutDown(){
+        data = null;
+    }
+
     public boolean ConnectToWire(ForgeDirection direction){
         if(direction==ForgeDirection.getOrientation(this.worldObj.getBlockMetadata(xCoord, yCoord, zCoord))){
             return true;

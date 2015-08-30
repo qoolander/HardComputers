@@ -35,6 +35,7 @@ public class TileEntityCore extends ComputerTileEntityBase{
         }
 
         if(marAddress==null) throw new Error("no Mar found");
+        if(romAddress==null) throw new Error("no Rom found");
 
         System.out.println(network);
     }
@@ -46,9 +47,11 @@ public class TileEntityCore extends ComputerTileEntityBase{
 
     public void onBlockUpdate(){
         super.onBlockUpdate();
-        updateNetwork();
         if(this.worldObj.getBlockPowerInput(xCoord, yCoord, zCoord)>0){
-            startUp();
+            if(!running) {
+                updateNetwork();
+                startUp();
+            }
         }else{
             ShutDown(); //TODO implement ShutDown
         }
