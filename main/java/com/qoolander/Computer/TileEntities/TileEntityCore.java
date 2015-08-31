@@ -17,8 +17,6 @@ import java.util.HashMap;
  */
 public class TileEntityCore extends ComputerTileEntityBase{
 
-
-
     public boolean ConnectToWire(ForgeDirection direction){
         return true;
     }
@@ -166,7 +164,7 @@ public class TileEntityCore extends ComputerTileEntityBase{
         int rb = registerData&0x3;
 
         AFlag = registers[ra]>registers[rb];
-        EFlag = registers[ra]==registers[rb];
+        EFlag = registers[ra].equals(registers[rb]);
     }
 
     private void jumpif(int flags){

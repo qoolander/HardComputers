@@ -12,5 +12,33 @@
   "logoFile": "",
   "screenshots": [],
   "dependencies": []
+},
+{
+    "modid": "computer",
+    "name": "Hard Computers",
+    "description": "Copmuter mod Ultra hard mode.",
+    "version": "${version}",
+    "mcversion": "${mcversion}",
+    "url": "",
+    "updateUrl": "",
+    "authorList": ["qoolander"],
+    "credits": "",
+    "logoFile": "",
+    "screenshots": [],
+    "dependencies": []
+},
+{
+    "modid": "laserdisplay",
+    "name": "Laser Display",
+    "description": "Display addon for 'Hard computers'.",
+    "version": "${version}",
+    "mcversion": "${mcversion}",
+    "url": "",
+    "updateUrl": "",
+    "authorList": ["qoolander"],
+    "credits": "",
+    "logoFile": "",
+    "screenshots": [],
+    "dependencies": []
 }
 ]

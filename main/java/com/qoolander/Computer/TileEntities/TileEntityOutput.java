@@ -14,6 +14,10 @@ public class TileEntityOutput extends ComputerTileEntityBase {
 
     public int outValue = 0;
 
+    public void onShutDown(){
+        setData((byte)0);
+    }
+
     public boolean ConnectToWire(ForgeDirection direction){
         return true;
     }

@@ -26,10 +26,9 @@ public class TileEntityMar extends ComputerTileEntityBase implements IUpdatePlay
         }
     }
 
-    /*public void Init(){
-        UpdateMemoryAmount();
-        data = new byte[ByteCount];
-    }*/
+    public void onShutDown(){
+        data = null;
+    }
 
     private byte[] data;
 
@@ -58,13 +57,6 @@ public class TileEntityMar extends ComputerTileEntityBase implements IUpdatePlay
     public void updateEntity(){}
 
     public void onStart(){
-        UpdateMemoryAmount();
-        System.out.println("Bytes: " +ByteCount);
-        data = new byte[ByteCount];
-    }
-
-    public void onPlace() {
-        super.onPlace();
         UpdateMemoryAmount();
         System.out.println("Bytes: " +ByteCount);
         data = new byte[ByteCount];

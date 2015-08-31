@@ -13,11 +13,10 @@ public class TileEntityRom extends ComputerTileEntityBase {
 
     public byte[] instructions;
 
-    public void onPlace(){
-        super.onPlace();
-
-        this.onStart();
+    public void onShutDown(){
+        instructions = null;
     }
+
 
     public void onStart(){
         instructions = new byte[20];
