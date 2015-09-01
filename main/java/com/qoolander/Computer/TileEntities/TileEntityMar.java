@@ -30,10 +30,6 @@ public class TileEntityMar extends ComputerTileEntityBase implements IUpdatePlay
         }
     }
 
-    public void onShutDown(){
-        data = null;
-    }
-
     private byte[] data;
 
     void UpdateMemoryAmount(){

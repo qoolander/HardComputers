@@ -12,10 +12,6 @@ public class TileEntityOutput extends ComputerTileEntityBase {
 
     }
 
-    public void onShutDown(){
-        setData((byte)0);
-    }
-
     public int outValue = 0;
 
     public void onShutDown(){

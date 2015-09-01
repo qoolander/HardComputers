@@ -28,7 +28,7 @@ public class TileEntityRenderWire extends TileEntitySpecialRenderer {
 
         TileEntityWire wire = (TileEntityWire) tileEntity;
         if(!wire.isOnlyOpposites(wire.connections)) {
-            drawCore(tileEntity);
+            drawCore();
 
             for(int i = 0; i < wire.connections.length; i++){
                 if(wire.connections[i] != null){
@@ -185,7 +185,7 @@ public class TileEntityRenderWire extends TileEntitySpecialRenderer {
         GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
     }
 
-    public void drawCore(TileEntity tileEntity){
+    public void drawCore(){
         Tessellator tessellator = Tessellator.instance;
         tessellator.startDrawingQuads();
         {

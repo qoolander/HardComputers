@@ -2,7 +2,6 @@ package com.qoolander.Computer.blocks;
 
 import com.qoolander.Computer.ComputerMain;
 import com.qoolander.Computer.TileEntities.ComputerTileEntityBase;
-import com.qoolander.Computer.TileEntities.TileEntityMar;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
@@ -20,7 +19,7 @@ public class BlockComputerBase extends BlockContainer {
     public BlockComputerBase(String unlocalizedName){
         super(Material.rock);
         this.setBlockName(unlocalizedName);
-        this.setCreativeTab(ComputerMain.tabMyMod);
+        this.setCreativeTab(ComputerMain.tabComputer);
         this.setBlockTextureName(ComputerMain.MODID + ":" + unlocalizedName);
     }
 

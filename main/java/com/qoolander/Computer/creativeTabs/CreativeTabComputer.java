@@ -1,13 +1,17 @@
-package com.qoolander.Computer;
+package com.qoolander.Computer.creativeTabs;
 
+import com.qoolander.Computer.ComputerMain;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 
-public class CreativeTabsMyMod extends CreativeTabs {
+/**
+ * Created by Sam on 01/09/2015.
+ */
+public class CreativeTabComputer extends CreativeTabs {
 
-    public CreativeTabsMyMod(String tabLabel)
+    public CreativeTabComputer(String tabLabel)
     {
         super(tabLabel);
     }

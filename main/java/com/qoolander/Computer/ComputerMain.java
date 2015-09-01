@@ -2,6 +2,8 @@ package com.qoolander.Computer;
 
 import com.qoolander.Computer.TileEntities.*;
 import com.qoolander.Computer.blocks.*;
+import com.qoolander.Computer.creativeTabs.CreativeTabComputer;
+import com.qoolander.Computer.creativeTabs.CreativeTabLaser;
 import com.qoolander.Computer.proxy.CommonProxy;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
@@ -30,8 +32,13 @@ public class ComputerMain
     public static Block blockOutput;
     public static Block blockCore;
     public static Block blockRom;
+    public static Block blockBasicRedLaser;
+    public static Block blockBasicGreenLaser;
+    public static Block blockBasicBlueLaser;
+    public static Block blockReflector;
 
-    public static CreativeTabs tabMyMod = new CreativeTabsMyMod("Computer");
+    public static CreativeTabs tabComputer = new CreativeTabComputer("Computer");
+    public static CreativeTabs tabLasers = new CreativeTabLaser("Laser");
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event)
@@ -39,10 +46,15 @@ public class ComputerMain
         byteMem = new BlockByteMem("byteMem");
         eightByteMem = new Block8ByteMem("8byteMem");
         mar = new BlockMar("mar");
-        blockWire = new BlockWire().setBlockName("blockWire").setCreativeTab(tabMyMod);
+        blockWire = new BlockWire().setBlockName("blockWire").setCreativeTab(tabComputer);
         blockOutput = new BlockOutput("blockOutput");
         blockCore = new BlockCore("blockCore");
         blockRom = new BlockRom("blockRom");
+        blockBasicRedLaser = new BlockBasicRedLaser("basicRedLaser");
+        blockBasicGreenLaser = new BlockBasicGreenLaser("basicGreenLaser");
+        blockBasicBlueLaser = new BlockBasicBlueLaser("basicBlueLaser");
+        blockReflector = new BlockReflector("laserReflector");
+
         GameRegistry.registerBlock(byteMem, byteMem.getUnlocalizedName().substring(5));
         GameRegistry.registerBlock(mar, mar.getUnlocalizedName().substring(5));
         GameRegistry.registerBlock(blockWire, blockWire.getUnlocalizedName().substring(5));
@@ -50,11 +62,18 @@ public class ComputerMain
         GameRegistry.registerBlock(blockOutput, blockOutput.getUnlocalizedName().substring(5));
         GameRegistry.registerBlock(blockCore, blockCore.getUnlocalizedName().substring(5));
         GameRegistry.registerBlock(blockRom, blockRom.getUnlocalizedName().substring(5));
+        GameRegistry.registerBlock(blockBasicRedLaser, blockBasicRedLaser.getUnlocalizedName().substring(5));
+        GameRegistry.registerBlock(blockBasicGreenLaser, blockBasicGreenLaser.getUnlocalizedName().substring(5));
+        GameRegistry.registerBlock(blockBasicBlueLaser, blockBasicBlueLaser.getUnlocalizedName().substring(5));
+        GameRegistry.registerBlock(blockReflector, blockReflector.getUnlocalizedName().substring(5));
+
         GameRegistry.registerTileEntity(TileEntityMar.class, "mar_tile_entity");
         GameRegistry.registerTileEntity(TileEntityWire.class, "computer_wire");
         GameRegistry.registerTileEntity(TileEntityOutput.class, "output_tile_entity");
         GameRegistry.registerTileEntity(TileEntityCore.class, "core_tile_entity");
         GameRegistry.registerTileEntity(TileEntityRom.class, "rom_tile_entity");
+        GameRegistry.registerTileEntity(TileEntityLaserEmitter.class, "laserEmitter_tile_entity");
+        GameRegistry.registerTileEntity(TileEntityLaserReflector.class, "laserReflector_tile_entity");
 
         proxy.registerProxies();
     }

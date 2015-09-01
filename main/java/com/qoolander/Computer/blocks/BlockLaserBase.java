@@ -1,9 +1,7 @@
-package com.qoolander.LaserDisplay.blocks;
+package com.qoolander.Computer.blocks;
 
-import com.qoolander.LaserDisplay.LaserMain;
-import com.qoolander.LaserDisplay.tileEntities.LaserTileEntityBase;
-import com.qoolander.LaserDisplay.tileEntities.TileEntityLaserEmitter;
-import net.minecraft.block.Block;
+import com.qoolander.Computer.ComputerMain;
+import com.qoolander.Computer.TileEntities.TileEntityLaserBase;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.EntityLivingBase;
@@ -13,14 +11,15 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
 /**
- * Created by Sam on 31/08/2015.
+ * Created by Sam on 01/09/2015.
  */
-public class BlockLaserEmitter extends BlockContainer {
-    public BlockLaserEmitter(String unlocalizedName){
+public class BlockLaserBase extends BlockContainer{
+
+    public BlockLaserBase(String unlocalizedName){
         super(Material.rock);
         this.setBlockName(unlocalizedName);
-        this.setCreativeTab(LaserMain.tabLaser);
-        this.setBlockTextureName(LaserMain.MODID + ":" + unlocalizedName);
+        this.setCreativeTab(ComputerMain.tabLasers);
+        this.setBlockTextureName(ComputerMain.MODID + ":" + unlocalizedName);
     }
 
     public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase player, ItemStack stack)
@@ -47,17 +46,12 @@ public class BlockLaserEmitter extends BlockContainer {
             world.setBlockMetadataWithNotify(x, y, z, 4, 2);
         }
 
-        ((LaserTileEntityBase)world.getTileEntity(x, y, z)).onPlace();
-    }
-
-    @Override
-    public void onNeighborBlockChange(World w, int x, int y, int z, Block p_149695_5_) {
-        ((TileEntityLaserEmitter) w.getTileEntity(x, y, z)).onBlockUpdate();
+        ((TileEntityLaserBase)world.getTileEntity(x, y, z)).onPlace();
     }
 
     @Override
     public TileEntity createNewTileEntity(World worldIn, int meta){
-        LaserTileEntityBase result = new TileEntityLaserEmitter();
+        TileEntityLaserBase result = new TileEntityLaserBase();
 
         return result;
     }

@@ -1,4 +1,4 @@
-package com.qoolander.LaserDisplay;
+package com.qoolander.Computer.creativeTabs;
 
 import com.qoolander.Computer.ComputerMain;
 import cpw.mods.fml.relauncher.Side;
@@ -7,9 +7,10 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 
 /**
- * Created by Sam on 31/08/2015.
+ * Created by Sam on 01/09/2015.
  */
 public class CreativeTabLaser extends CreativeTabs {
+
     public CreativeTabLaser(String tabLabel)
     {
         super(tabLabel);
@@ -19,6 +20,7 @@ public class CreativeTabLaser extends CreativeTabs {
     @SideOnly(Side.CLIENT)
     public Item getTabIconItem()
     {
-        return Item.getItemFromBlock(LaserMain.laserEmitter);
+        return Item.getItemFromBlock(ComputerMain.blockBasicRedLaser);
     }
+
 }

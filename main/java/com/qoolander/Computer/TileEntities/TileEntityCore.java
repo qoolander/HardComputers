@@ -60,6 +60,13 @@ public class TileEntityCore extends ComputerTileEntityBase{
         for(int i = 0; i < network.size(); i++){
             network.get((byte)i).onShutDown();
         }
+
+        IAR = 0;
+        IR = 0;
+        registers = new Byte[4];
+        IOAddress = 0;
+        marAddress = 0;
+        romAddress = 0;
     }
 
     private Byte IAR = 0;
